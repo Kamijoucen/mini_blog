@@ -4,8 +4,8 @@ import "time"
 
 type Article struct {
 	Id             int
-	Title          string
-	Content        string
+	Title          string `v:"required"`
+	Content        string `v:"required"`
 	CreateUserId   int
 	CreateUserName string
 	CreateTime     time.Time

@@ -14,10 +14,12 @@ func main() {
 }
 
 func bind(server *ghttp.Server) {
-	server.BindObject("/", router.TestController{})
+	server.SetRewrite("/", "/test1.html")
+	server.BindObject("/test", router.TestController{})
+	server.BindObject("/article", router.ArticleRouter{})
 }
 
 func config(server *ghttp.Server) {
-	//server.SetServerRoot("/home/sftpuser/web_host/MyBlog/static")
+	server.SetServerRoot("./static")
 	server.SetPort(80)
 }
