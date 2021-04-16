@@ -27,12 +27,13 @@ func (receiver *ArticleRouter) Save(request *ghttp.Request) {
 	_ = request.Response.WriteJson(Success())
 }
 
-func (receiver *ArticleRouter) ListMain(request *ghttp.Request) {
+func (receiver *ArticleRouter) Detail(request *ghttp.Request) {
 
 }
 
 func (receiver *ArticleRouter) List(request *ghttp.Request) {
-	result, err := g.DB().Model(db.ARTICLE).All()
+	result, err := g.DB().Model(db.ARTICLE).Fields(
+		"id, title, create_time, modify_time").All()
 	if err != nil {
 		request.Response.Writef(err.Error())
 		return

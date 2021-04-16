@@ -14,7 +14,7 @@ func main() {
 }
 
 func bind(server *ghttp.Server) {
-	server.SetRewrite("/", "/test1.html")
+	server.SetRewrite("/", "/index.html")
 	server.BindObject("/test", router.TestController{})
 	server.BindObject("/article", router.ArticleRouter{})
 }
