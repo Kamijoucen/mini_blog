@@ -1,11 +1,9 @@
 package router
 
 import (
-	"MyBlog/db"
 	"MyBlog/model"
-	"github.com/gogf/gf/frame/g"
+	"MyBlog/service"
 	"github.com/gogf/gf/net/ghttp"
-	"time"
 )
 
 type ArticleRouter struct {
@@ -17,26 +15,20 @@ func (receiver *ArticleRouter) Save(request *ghttp.Request) {
 		request.Response.Writef(err.Error())
 		return
 	}
-	article.CreateTime = time.Now()
-	article.ModifyTime = time.Now()
-	_, err := g.DB().Model(db.ARTICLE).Data(article).Insert()
+	if err := service.Article.Save(article); err != nil {
+		request.Response.Writef(err.Error())
+		return
+	}
+	_ = request.Response.WriteJson(model.Success())
+}
+
+func (receiver *ArticleRouter) ListMain(request *ghttp.Request) {
+
+	list, err := service.Article.ListMain()
+
 	if err != nil {
 		request.Response.Writef(err.Error())
 		return
 	}
-	_ = request.Response.WriteJson(Success())
-}
-
-func (receiver *ArticleRouter) Detail(request *ghttp.Request) {
-
-}
-
-func (receiver *ArticleRouter) List(request *ghttp.Request) {
-	result, err := g.DB().Model(db.ARTICLE).Fields(
-		"id, title, create_time, modify_time").All()
-	if err != nil {
-		request.Response.Writef(err.Error())
-		return
-	}
-	_ = request.Response.WriteJson(result.List())
+	_ = request.Response.WriteJson(list)
 }
