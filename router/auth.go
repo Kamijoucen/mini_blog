@@ -5,10 +5,9 @@ import "github.com/gogf/gf/net/ghttp"
 type AuthRouter struct {
 }
 
-func (receiver AuthRouter) Login(request *ghttp.Request) {
-	// todo check pwd
+func (receiver *AuthRouter) Login(request *ghttp.Request) {
 
 	if true {
-		request.Session.Set("user", nil)
+		_ = request.Session.Set("user", nil)
 	}
 }
